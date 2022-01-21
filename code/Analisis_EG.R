@@ -2,9 +2,9 @@
 
 # INSTALACIÓN DE WGCNA
 
-# install.packages(c("matrixStats", "Hmisc", "splines", "foreach", "doParallel", "fastcluster", "dynamicTreeCut", "survival", "BiocManager"))
-# BiocManager::install(c("GO.db", "preprocessCore", "impute"))
-# 
+install.packages(c("matrixStats", "Hmisc", "splines", "foreach", "doParallel", "fastcluster", "dynamicTreeCut", "survival", "BiocManager"))
+BiocManager::install(c("GO.db", "preprocessCore", "impute"))
+
 # install.packages(c("matrixStats", "Hmisc", "splines", "foreach", "doParallel", "fastcluster", "dynamicTreeCut", "survival")
 # )
 # #install.packages("~/Downloads/WGCNA_1.67.tar", repos = NULL, lib=.Library)
