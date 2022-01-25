@@ -2,18 +2,17 @@
 
 # INSTALACIÓN DE WGCNA
 
-install.packages(c("matrixStats", "Hmisc", "splines", "foreach", "doParallel", "fastcluster", "dynamicTreeCut", "survival", "BiocManager"))
-BiocManager::install(c("GO.db", "preprocessCore", "impute"))
+# Automatico
 
-# install.packages(c("matrixStats", "Hmisc", "splines", "foreach", "doParallel", "fastcluster", "dynamicTreeCut", "survival")
-# )
-# #install.packages("~/Downloads/WGCNA_1.67.tar", repos = NULL, lib=.Library)
-# install.packages("~/Downloads/WGCNA_1.67.tar", repos = NULL, lib=.Library, type = "source")
-# #library(WGCNA) # Error, probably impute is not installed
-# 
-# if (!requireNamespace("BiocManager", quietly = TRUE))
-#   install.packages("BiocManager")
-# BiocManager::install("impute")
+install.packages("BiocManager")
+BiocManager::install("WGCNA")
+
+# Manual (R version 3.0.0 and higher)
+
+# install.packages(c("matrixStats", "Hmisc", "splines", "foreach", "doParallel", "fastcluster", "dynamicTreeCut", "survival", "BiocManager"))
+# BiocManager::install(c("GO.db", "preprocessCore", "impute"));
+
+# ENTRADA DE DATOS, LIMPIEZA Y PREPROCESAMIENTO
 
 # CONFIGURACIÓN DE R Y PROCESAMIENTO DE DATOS
 
@@ -24,8 +23,10 @@ setwd(workingDir);
 
 library(WGCNA)
 
+# Dataset de perfiles de expresión génica
 sars_Cov2 <- read.table(file = "GSE147507.tsv", header = TRUE, sep = "\t")
 
+# Vistazo a los datos
 dim(sars_Cov2)
 names(sars_Cov2)
 
@@ -70,3 +71,8 @@ keepSamples = (clust==1)
 datExpr = datExpr0[keepSamples, ]
 nGenes = ncol(datExpr)
 nSamples = nrow(datExpr)
+
+# GUARDADO DE DATOS
+
+save(datExpr, file = "SARS_Cov2_datExpr.RData")
+
