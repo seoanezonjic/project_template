@@ -1,6 +1,6 @@
 # WGCNA II
 
-# CONFIGURACI覰 DE R
+# CONFIGURACI脫N DE R
 
 getwd();
 
@@ -18,8 +18,9 @@ lnames = load(file = "SARS_Cov2_datExpr.RData");
 
 lnames
 
-# AN罫ISIS DE LA TOPOLOG虯 DE LA RED
+# AN脕LISIS DE LA TOPOLOG脥A DE LA RED
 
+# Selecci贸n de umbrales
 powers = c(c(1:10), seq(from = 12, to=20, by=2))
 
 sft = pickSoftThreshold(datExpr, powerVector = powers, verbose = 5)
@@ -41,12 +42,14 @@ plot(sft$fitIndices[,1], sft$fitIndices[,5],
      main = paste("Mean connectivity"))
 text(sft$fitIndices[,1], sft$fitIndices[,5], labels=powers, cex=cex1,col="red")
 
+# Transformaci贸n del tipo de valores para todas las columnas (Una funci贸n no detecta los valores si no son tipo NUMERIC)
 test <- datExpr
 
 test <- setNames(data.frame(lapply(test, as.numeric)), 
                         colnames(test))
 sum(sapply(test, is.numeric))
 
+# Construcci贸n de la red de genes
 net = blockwiseModules(test, power = powers,
                        TOMType = "unsigned", minModuleSize = 30,
                        reassignThreshold = 0, mergeCutHeight = 0.25,
@@ -55,6 +58,7 @@ net = blockwiseModules(test, power = powers,
                        saveTOMFileBase = "SARS_Cov2TOM", 
                        verbose = 3)
 
+# Identificaci贸n de m贸dulos
 table(net$colors)
 
 sizeGrWindow(12, 9)
@@ -65,6 +69,7 @@ plotDendroAndColors(net$dendrograms[[1]], mergedColors[net$blockGenes[[1]]],
                     dendroLabels = FALSE, hang = 0.03,
                     addGuide = TRUE, guideHang = 0.05)
 
+# Informaci贸n de genes y m贸dulos
 moduleLabels = net$colors
 moduleColors = labels2colors(net$colors)
 MEs = net$MEs;
