@@ -32,15 +32,18 @@ names(sars_Cov2)
 
 # REAJUSTE DE DATOS
 
+# Transformación de los datos: genes <- filas, muestras <- columnas
 datExpr0 = as.data.frame(t(sars_Cov2[,-1]));
 names(datExpr0) = sars_Cov2$X;
 rownames(datExpr0) = names(sars_Cov2)[-1];
 
 # COMPROBACIÓN DE DATOS EN BUSCA DE VALORES FALTANTES
 
+# Busqueda de genes con valores perdidos
 gsg = goodSamplesGenes(datExpr0, verbose = 3);
 gsg$allOK
 
+# Si la última comprobación devuelve TRUE, no se necesita ejecutar el siguiente código. De lo contrario, se eliminan los genes y muestras prescindibles
 if (!gsg$allOK)
 {
   
@@ -52,6 +55,7 @@ if (!gsg$allOK)
   datExpr0 = datExpr0[gsg$goodSamples, gsg$goodGenes]
 }
 
+# Agrupamos las muestras para ver si hay valores atípicos
 sampleTree = hclust(dist(datExpr0), method = "average");
 
 sizeGrWindow(12,9)
@@ -63,7 +67,7 @@ plot(sampleTree, main = "Sample clustering to detect outliers", sub="", xlab="",
 
 abline(h = 150000, col = "red")
 
-
+# Detectamos algunos valores atípicos. Los eliminamos eligiendo un corte de altura
 clust = cutreeStatic(sampleTree, cutHeight = 150000, minSize = 10)
 table(clust)
 
@@ -74,5 +78,5 @@ nSamples = nrow(datExpr)
 
 # GUARDADO DE DATOS
 
+# La variable datExpr tiene los datos preparados para el análisis de red
 save(datExpr, file = "SARS_Cov2_datExpr.RData")
-
