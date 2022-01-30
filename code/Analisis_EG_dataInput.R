@@ -18,7 +18,7 @@ BiocManager::install("WGCNA")
 
 getwd();
 
-workingDir = "C:/Users/Sergio/Desktop/Proyecto BS";
+workingDir = ".";
 setwd(workingDir); 
 
 library(WGCNA)
