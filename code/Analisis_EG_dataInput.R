@@ -4,7 +4,7 @@
 
 # Automatico
 
-install.packages("BiocManager")
+#install.packages("BiocManager")
 BiocManager::install("WGCNA")
 
 # Manual (R version 3.0.0 and higher)
@@ -18,13 +18,13 @@ BiocManager::install("WGCNA")
 
 getwd();
 
-workingDir = ".";
+workingDir = "C:/Users/Sergio/Desktop/Proyecto BS";
 setwd(workingDir); 
 
 library(WGCNA)
 
 # Dataset de perfiles de expresión génica
-sars_Cov2 <- read.table(file = "GSE147507.tsv", header = TRUE, sep = "\t")
+sars_Cov2 <- read.table(file = "GEO-GSE147507.tsv", header = TRUE, sep = "\t")
 
 # Vistazo a los datos
 dim(sars_Cov2)
@@ -62,10 +62,12 @@ sizeGrWindow(12,9)
 
 par(cex = 0.6);
 par(mar = c(0,4,2,0))
+pdf(file = 'sampleClustering.pdf', width = 12,height = 12)
 plot(sampleTree, main = "Sample clustering to detect outliers", sub="", xlab="", cex.lab = 1.5, 
      cex.axis = 1.5, cex.main = 2)
 
 abline(h = 150000, col = "red")
+dev.off()
 
 # Detectamos algunos valores atípicos. Los eliminamos eligiendo un corte de altura
 clust = cutreeStatic(sampleTree, cutHeight = 150000, minSize = 10)
